@@ -27,7 +27,7 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_ARCH_VARIANT_CPU := cortex-a8
-ARCH_ARM_HAVE_TLS_REGISTER := true
+TARGET_CPU_VARIANT := cortex-a8
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
@@ -36,6 +36,8 @@ TARGET_PROVIDES_INIT := true
 TARGET_BOARD_PLATFORM := s5pc110
 TARGET_BOOTLOADER_BOARD_NAME := aries
 TARGET_RECOVERY_INITRC := device/samsung/galaxys4gmtd/rdisk/recovery.rc
+TARGET_RECOVERY_FSTAB := device/samsung/galaxys4gmtd/rdisk/galaxys4gmtd.fstab.aries
+RECOVERY_FSTAB_VERSION := 2
 
 BOARD_MOBILEDATA_INTERFACE_NAME = "pdp0"
 
@@ -126,6 +128,8 @@ USE_OPENGL_RENDERER := true
 TARGET_DISABLE_TRIPLE_BUFFERING := false
 
 BOARD_ALLOW_EGL_HIBERNATION := true
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # Bootanimation
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -133,6 +137,22 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := false
 
 # hwcomposer: custom vsync ioctl
 BOARD_CUSTOM_VSYNC_IOCTL := true
+
+# SELinux
+BOARD_SEPOLICY_DIRS += \
+    device/samsung/galaxys4gmtd/sepolicy
+
+BOARD_SEPOLICY_UNION += \
+    bdaddr_read.te \
+    file_contexts \
+    geomagneticd.te \
+    orientationd.te \
+    property_contexts \
+    pvrsrvinit.te \
+    rild.te \
+
+# Hardware tunables
+BOARD_HARDWARE_CLASS := device/samsung/aries-common/cmhw/
 
 # Suspend in charger to disable capacitive keys
 BOARD_CHARGER_ENABLE_SUSPEND := true

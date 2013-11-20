@@ -43,13 +43,14 @@ DEVICE_PACKAGE_OVERLAYS := device/samsung/galaxys4gmtd/overlay \
 
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
-	device/samsung/galaxys4gmtd/rdisk/vold.fstab:system/etc/vold.fstab \
 	device/samsung/galaxys4gmtd/sound/asound.conf:system/etc/asound.conf \
 	device/samsung/aries-common/egl.cfg:system/lib/egl/egl.cfg \
 	device/samsung/aries-common/mxt224_ts_input.idc:system/usr/idc/mxt224_ts_input.idc
 
 # Init files
 PRODUCT_COPY_FILES += \
+	evice/samsung/aries-common/init.recovery.aries.rc:root/init.recovery.aries.rc \
+	device/samsung/galaxys4gmtd/rdisk/fstab.aries:root/fstab.aries \
 	device/samsung/galaxys4gmtd/rdisk/init.aries.rc:root/init.aries.rc \
 	device/samsung/galaxys4gmtd/rdisk/init.aries.gps.rc:root/init.aries.gps.rc \
 	device/samsung/galaxys4gmtd/rdisk/init.aries.usb.rc:root/init.aries.usb.rc \
@@ -72,7 +73,6 @@ PRODUCT_PACKAGES := \
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-	make_ext4fs \
 	setup_fs \
 	bml_over_mtd
 
@@ -122,12 +122,11 @@ PRODUCT_PACKAGES += \
 # Device-specific packages
 PRODUCT_PACKAGES += \
 	SamsungServiceMode \
-	AriesParts \
-	tvouthack
+	AriesParts
 	
 # GPS
 PRODUCT_PACKAGES += \
-    gps.aries
+    gpsd
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -154,6 +153,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES := \
 	ro.opengles.version=131072
 
+# Support for Browser's saved page feature. This allows
+# for pages saved on previous versions of the OS to be
+# viewed on the current OS.
+PRODUCT_PACKAGES += \
+    libskia_legacy
+
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
@@ -162,7 +167,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.telephony.ril_class=SamsungExynos3RIL \
 	ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock \
 	mobiledata.interfaces=pdp0,eth0,gprs,ppp0
+    ro.bq.gpu_to_cpu_unsupported=1 \
+    ro.config.low_ram=true \
 
+
+# SGX540 is slower with the scissor optimization enabled
+PRODUCT_PROPERTY_OVERRIDES += \
+       ro.hwui.disable_scissor_opt=true
+       
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
 PRODUCT_PROPERTY_OVERRIDES += \
