@@ -49,8 +49,8 @@ PRODUCT_COPY_FILES := \
 
 # Init files
 PRODUCT_COPY_FILES += \
-	evice/samsung/aries-common/init.recovery.aries.rc:root/init.recovery.aries.rc \
-	device/samsung/galaxys4gmtd/rdisk/fstab.aries:root/fstab.aries \
+	device/samsung/aries-common/init.recovery.aries.rc:root/init.recovery.aries.rc \
+	device/samsung/galaxys4gmtd/rdisk/galaxys4gmtd.fstab.aries:root/fstab.aries \
 	device/samsung/galaxys4gmtd/rdisk/init.aries.rc:root/init.aries.rc \
 	device/samsung/galaxys4gmtd/rdisk/init.aries.gps.rc:root/init.aries.gps.rc \
 	device/samsung/galaxys4gmtd/rdisk/init.aries.usb.rc:root/init.aries.usb.rc \
